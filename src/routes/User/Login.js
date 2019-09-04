@@ -1,50 +1,68 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import { Link } from "dva/router";
-import { Checkbox, Alert } from "antd";
-import Login from "../../components/Login";
+import { Checkbox, Alert, Button, Form, Tabs, Input, Icon } from "antd";
+import { routerRedux } from "dva/router";
 import styles from "./Login.less";
+import Register from "./Register";
+import userLogo from "../../../public/user-logo.png";
 
-const {
-  Tab, UserName, Password, Submit,
-} = Login;
+const FormItem = Form.Item;
+const { TabPane } = Tabs;
 
+@Form.create()
 @connect(({ loading, global }) => ({
   login: {},
   isRegist: global.isRegist,
-  submitting: loading.effects["user/login"],
+  rainbondInfo: global.rainbondInfo,
+  submitting: loading.effects["user/login"]
 }))
 export default class LoginPage extends Component {
-  state = {
-    type: "account",
-    autoLogin: true,
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      type:
+        this.props.location.pathname &&
+        this.props.location.pathname.indexOf("register") > -1
+          ? "register"
+          : "login",
+      autoLogin: true
+    };
+  }
   componentDidMount() {}
 
-  onTabChange = (type) => {
+  onTabChange = type => {
+    this.props.dispatch(routerRedux.push(`/user/${type}`));
     this.setState({ type });
   };
 
-  handleSubmit = (err, values) => {
-    if (!err) {
+  handleReset = () => {
+    const { resetFields } = this.props.form;
+    resetFields();
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const form = this.props.form;
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
       this.props.dispatch({
         type: "user/login",
         payload: {
-          ...values,
-        },
+          ...fieldsValue
+        }
       });
-    }
+    });
   };
 
-  changeAutoLogin = (e) => {
+  changeAutoLogin = e => {
     this.setState({ autoLogin: e.target.checked });
   };
 
   renderMessage = content => (
     <Alert
       style={{
-        marginBottom: 24,
+        marginBottom: 24
       }}
       message={content}
       type="error"
@@ -53,33 +71,104 @@ export default class LoginPage extends Component {
   );
 
   render() {
-    const { login, submitting } = this.props;
+    const { submitting, form, rainbondInfo } = this.props;
     const { type } = this.state;
+    const { getFieldDecorator } = form;
+
     return (
       <div className={styles.main}>
-        <Login defaultActiveKey={type} onTabChange={this.onTabChange} onSubmit={this.handleSubmit}>
-          <Tab key="account" tab="">
-            {login.status === "error" &&
-              login.type === "account" &&
-              !login.submitting &&
-              this.renderMessage("账户或密码错误")}
-            <UserName name="nick_name" placeholder="用户名/邮箱" />
-            <Password name="password" placeholder="密码" />
-          </Tab>
-          <div>
-            <Checkbox checked={this.state.autoLogin} onChange={this.changeAutoLogin}>
-              自动登录
-            </Checkbox>
+        <Link to="/">
+          <div className={styles.loginBox}>
+            {/* <img
+                    style={{
+                    verticalAlign: 'middle'
+                  }}
+                    alt="logo"
+                    className={styles.logo}
+                    src={rainbondInfo.logo || logo}/> */}
+
+            <img
+              src={rainbondInfo.logo || userLogo}
+              alt={rainbondInfo.title || "智慧社会操作系统"}
+            />
+            <h3> {"智慧社会操作系统"} </h3>
           </div>
-          <Submit loading={submitting}>登录</Submit>
-          <div className={styles.other}>
-            {this.props.isRegist && (
-              <Link className={styles.register} to="/user/register">
-                注册账户
-              </Link>
+        </Link>
+
+        <Tabs
+          defaultActiveKey="login"
+          activeKey={type}
+          onChange={this.onTabChange}
+          style={{ textAlign: "center" }}
+        >
+          <TabPane tab="登录" key="login">
+            {type === "login" && (
+              <Form onSubmit={this.handleSubmit} style={{ marginTop: "20px" }}>
+                <FormItem>
+                  {getFieldDecorator("nick_name", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "请输入用户名！"
+                      }
+                    ]
+                  })(
+                    <Input
+                      prefix={
+                        <Icon
+                          type="user"
+                          style={{ color: "rgba(0,0,0,.25)" }}
+                        />
+                      }
+                      size="large"
+                      placeholder="请输入用户名！"
+                    />
+                  )}
+                </FormItem>
+                <FormItem>
+                  {getFieldDecorator("password", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "请输入密码"
+                      }
+                    ]
+                  })(
+                    <Input
+                      size="large"
+                      type="password"
+                      prefix={
+                        <Icon
+                          type="lock"
+                          style={{ color: "rgba(0,0,0,.25)" }}
+                        />
+                      }
+                      placeholder="请输入密码"
+                      min={8}
+                    />
+                  )}
+                </FormItem>
+                <div style={{ textAlign: "left" }}>
+                  <Checkbox
+                    checked={this.state.autoLogin}
+                    onChange={this.changeAutoLogin}
+                  >
+                    自动登录
+                  </Checkbox>
+                </div>
+                <div className={styles.loadbottom}>
+                  <Button type="primary" loading={submitting} htmlType="submit">
+                    登录
+                  </Button>
+                  <Button onClick={this.handleReset}>重置</Button>
+                </div>
+              </Form>
             )}
-          </div>
-        </Login>
+          </TabPane>
+          <TabPane tab="注册" key="register">
+            {type === "register" && <Register onChange={this.onTabChange} />}
+          </TabPane>
+        </Tabs>
       </div>
     );
   }

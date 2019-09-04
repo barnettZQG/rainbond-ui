@@ -1,23 +1,26 @@
 @import "~antd/lib/style/themes/default.less";
 
 .container {
-  display: flex;
+  display       : flex;
   flex-direction: column;
-  min-height: 100%;
-  background: #f0f2f5;
+  min-height    : 100%;
+  background-image   : url('../../public/user-bg.png');
+  background-repeat  : no-repeat;
+  background-position: center;
+  background-size    : 100% 100%;
 }
 
 .content {
   padding: 32px 0;
-  flex: 1;
+  flex   : 1;
 }
 
 @media (min-width: @screen-md-min) {
   .container {
-    background-image: url('../../public/user-bg.svg');
-    background-repeat: no-repeat;
-    background-position: center 110px;
-    background-size: 100%;
+    background-image   : url('../../public/user-bg.png');
+    background-repeat  : no-repeat;
+    background-position: center;
+    background-size    : 100% 100%;
   }
 
   .content {
@@ -30,8 +33,9 @@
 }
 
 .header {
-  height: 44px;
+  height     : 44px;
   line-height: 44px;
+
   a {
     text-decoration: none;
   }
@@ -39,22 +43,22 @@
 
 .logo {
   vertical-align: top;
-  margin-right: 16px;
-  max-height: 50px;
+  margin-right  : 16px;
+  max-height    : 50px;
 }
 
 .title {
-  font-size: 33px;
-  color: @heading-color;
+  font-size  : 33px;
+  color      : @heading-color;
   font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: 600;
-  position: relative;
-  top: 2px;
+  position   : relative;
+  top        : 2px;
 }
 
 .desc {
-  font-size: @font-size-base;
-  color: @text-color-secondary;
-  margin-top: 12px;
+  font-size    : @font-size-base;
+  color        : @text-color-secondary;
+  margin-top   : 12px;
   margin-bottom: 40px;
 }

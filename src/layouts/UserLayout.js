@@ -52,7 +52,8 @@ class UserLayout extends React.PureComponent {
         rainbondInfo.title
       } | Rainbond is Serverless PaaS , A new generation of easy-to-use cloud management platforms based on kubernetes.`;
     }
-    return title;
+    // return title;
+    return '智慧社会操作系统';
   }
   render() {
     const { routerData, match, rainbondInfo } = this.props;
@@ -61,16 +62,16 @@ class UserLayout extends React.PureComponent {
       <DocumentTitle title={this.getPageTitle()}>
         <div className={styles.container}>
           <div className={styles.content}>
-            <div className={styles.top}>
+            {/* <div className={styles.top}>
               <div className={styles.header}>
                 <Link to="/">
-                  {/* <img
+                  <img
                     style={{
                     verticalAlign: 'middle'
                   }}
                     alt="logo"
                     className={styles.logo}
-                    src={rainbondInfo.logo || logo}/> */}
+                    src={rainbondInfo.logo || logo}/>
                   <h1
                     style={{
                       display: "inline-block",
@@ -83,8 +84,8 @@ class UserLayout extends React.PureComponent {
                 </Link>
               </div>
               <div className={styles.desc}>无服务器PaaS、以应用为中心、软件定义一切</div>
-            </div>
-            <Switch>
+            </div> */}
+            {/* <Switch> */}
               {getRoutes(match.path, routerData).map(item => (
                 <Route
                   key={item.key}
@@ -94,7 +95,7 @@ class UserLayout extends React.PureComponent {
                 />
               ))}
               <Redirect exact from="/user" to="/user/login" />
-            </Switch>
+            {/* </Switch> */}
           </div>
           <GlobalFooter links={links} copyright={copyright} />
         </div>

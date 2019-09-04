@@ -209,7 +209,7 @@ export const getRouterData = (app) => {
       this["_/user/login"] = value;
     },
     "/user/register": {
-      component: dynamicWrapper(app, ["user"], () => import("../routes/User/Register")),
+      component: dynamicWrapper(app, ["user"], () => import("../routes/User/Login")),
       name: "注册",
     },
     "/user/register-result": {

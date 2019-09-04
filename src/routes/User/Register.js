@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import { routerRedux, Link } from "dva/router";
-import { Form, Input, Button, Row, Col, Progress } from "antd";
+import { Form, Input, Button, Row, Col, Icon, Progress } from "antd";
 import styles from "./Register.less";
 import config from "../../config/config";
 
@@ -10,14 +10,14 @@ const FormItem = Form.Item;
 const passwordProgressMap = {
   ok: "success",
   pass: "normal",
-  poor: "exception",
+  poor: "exception"
 };
 
 @connect(({ user, loading, global }) => ({
   register: user.register,
   rainbondInfo: global.rainbondInfo,
   isRegist: global.isRegist,
-  submitting: loading.effects["user/register"],
+  submitting: loading.effects["user/register"]
 }))
 @Form.create()
 export default class Register extends Component {
@@ -29,20 +29,9 @@ export default class Register extends Component {
     help: "",
     prefix: "86",
     time: Date.now(),
-    firstRegist: this.props.rainbondInfo && !this.props.rainbondInfo.is_user_register,
+    firstRegist:
+      this.props.rainbondInfo && !this.props.rainbondInfo.is_user_register
   };
-
-  componentWillReceiveProps(nextProps) {
-    const account = this.props.form.getFieldValue("user_name");
-    if (nextProps.register) {
-      this.props.dispatch(routerRedux.push({
-        pathname: "/user/register-result",
-        state: {
-          account,
-        },
-      }));
-    }
-  }
 
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -72,32 +61,32 @@ export default class Register extends Component {
     return "poor";
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields(
       {
-        force: true,
+        force: true
       },
       (err, values) => {
         if (!err) {
           this.props.dispatch({
             type: "user/register",
             payload: {
-              ...values,
+              ...values
             },
             complete: () => {
               this.changeTime();
-            },
+            }
           });
         }
-      },
+      }
     );
   };
 
-  handleConfirmBlur = (e) => {
+  handleConfirmBlur = e => {
     const { value } = e.target;
     this.setState({
-      confirmDirty: this.state.confirmDirty || !!value,
+      confirmDirty: this.state.confirmDirty || !!value
     });
   };
 
@@ -114,20 +103,20 @@ export default class Register extends Component {
     if (!value) {
       this.setState({
         help: "请输入密码！",
-        visible: !!value,
+        visible: !!value
       });
       callback("error");
     } else {
       this.setState({ help: "" });
       if (!this.state.visible) {
         this.setState({
-          visible: !!value,
+          visible: !!value
         });
       }
       if (value.length < 8) {
         this.setState({
           help: "密码不能少于8位！",
-          visible: !!value,
+          visible: !!value
         });
         callback("error");
       } else {
@@ -140,7 +129,7 @@ export default class Register extends Component {
     }
   };
 
-  changePrefix = (value) => {
+  changePrefix = value => {
     this.setState({ prefix: value });
   };
 
@@ -162,8 +151,13 @@ export default class Register extends Component {
   };
   changeTime = () => {
     this.setState({
-      time: Date.now(),
+      time: Date.now()
     });
+  };
+
+  handleToLogin = () => {
+    const { onChange } = this.props;
+    onChange && onChange("login");
   };
   render() {
     if (!this.props.isRegist) {
@@ -174,7 +168,7 @@ export default class Register extends Component {
     const { getFieldDecorator } = form;
     return (
       <div className={styles.main}>
-        <h3>{this.state.firstRegist ? "管理员注册" : "用户注册"}</h3>
+        {/* <h3>{this.state.firstRegist ? "管理员注册" : "用户注册"}</h3> */}
         <Form onSubmit={this.handleSubmit}>
           {this.state.firstRegist && (
             <FormItem>
@@ -182,10 +176,10 @@ export default class Register extends Component {
                 rules: [
                   {
                     required: true,
-                    message: "请输入企业名称",
-                  },
-                ],
-              })(<Input size="large" placeholder="企业名称" />)}
+                    message: "请填写企业名称"
+                  }
+                ]
+              })(<Input size="large" placeholder="请填写企业名称" />)}
             </FormItem>
           )}
           <FormItem>
@@ -193,46 +187,73 @@ export default class Register extends Component {
               rules: [
                 {
                   required: true,
-                  message: "请输入用户名！",
-                },
-              ],
-            })(<Input size="large" placeholder="用户名" />)}
+                  message: "请填写用户名！"
+                }
+              ]
+            })(
+              <Input
+                prefix={
+                  <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                size="large"
+                placeholder="请填写用户名"
+              />
+            )}
           </FormItem>
-          <FormItem>
-            {getFieldDecorator("email", {
-              rules: [
-                {
-                  required: true,
-                  message: "请输入邮箱地址！",
-                },
-                {
-                  type: "email",
-                  message: "邮箱地址格式错误！",
-                },
-              ],
-            })(<Input size="large" placeholder="邮箱" />)}
-          </FormItem>
+
           <FormItem help={this.state.help}>
             {getFieldDecorator("password", {
               rules: [
                 {
-                  validator: this.checkPassword,
-                },
-              ],
-            })(<Input size="large" type="password" placeholder="至少8位，区分大小写" />)}
+                  validator: this.checkPassword
+                }
+              ]
+            })(
+              <Input
+                size="large"
+                type="password"
+                placeholder="请填写密码"
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+              />
+            )}
           </FormItem>
           <FormItem>
             {getFieldDecorator("password_repeat", {
               rules: [
                 {
                   required: true,
-                  message: "请确认密码！",
+                  message: "请确认密码！"
                 },
                 {
-                  validator: this.checkConfirm,
+                  validator: this.checkConfirm
+                }
+              ]
+            })(
+              <Input
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                size="large"
+                type="password"
+                placeholder="确认密码"
+              />
+            )}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator("email", {
+              rules: [
+                {
+                  required: true,
+                  message: "请填写邮箱地址！"
                 },
-              ],
-            })(<Input size="large" type="password" placeholder="确认密码" />)}
+                {
+                  type: "email",
+                  message: "邮箱地址格式错误！"
+                }
+              ]
+            })(<Input size="large" placeholder="请填写邮箱" />)}
           </FormItem>
           <FormItem>
             <Row gutter={8}>
@@ -241,10 +262,10 @@ export default class Register extends Component {
                   rules: [
                     {
                       required: true,
-                      message: "请输入验证码！",
-                    },
-                  ],
-                })(<Input size="large" placeholder="验证码" />)}
+                      message: "请填写验证码！"
+                    }
+                  ]
+                })(<Input size="large" placeholder="请填写验证码！" />)}
               </Col>
               <Col span={8}>
                 <img
@@ -253,12 +274,13 @@ export default class Register extends Component {
                   style={{
                     width: "100%",
                     height: 40,
+                    cursor: "pointer"
                   }}
                 />
               </Col>
             </Row>
           </FormItem>
-          <FormItem>
+          <div className={styles.registbottom}>
             <Button
               size="large"
               loading={submitting}
@@ -269,11 +291,16 @@ export default class Register extends Component {
               {this.state.firstRegist ? "管理员注册" : "注册"}
             </Button>
             {!this.state.firstRegist && (
-              <Link className={styles.login} to="/user/login">
+              <a
+                className={styles.login}
+                onClick={() => {
+                  this.handleToLogin();
+                }}
+              >
                 使用已有账户登录
-              </Link>
+              </a>
             )}
-          </FormItem>
+          </div>
         </Form>
       </div>
     );

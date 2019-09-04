@@ -1,8 +1,8 @@
-import { PureComponent, Fragment } from 'react';
-import { connect } from 'dva';
-import { Steps, Form, Input, Select, Button } from 'antd';
-import styles from './index.less';
-import userStyles from '../../layouts/UserLayout.less';
+import { PureComponent, Fragment } from "react";
+import { connect } from "dva";
+import { Steps, Form, Input, Select, Button } from "antd";
+import styles from "./index.less";
+import userStyles from "../../layouts/UserLayout.less";
 
 const Step = Steps.Step;
 const Option = Select.Option;
@@ -13,10 +13,10 @@ export default class Index extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      teamName: '',
-      selectedRegion: '',
+      teamName: "",
+      selectedRegion: "",
       regions: [],
-      current: 0,
+      current: 0
     };
   }
   componentDidMount = () => {
@@ -24,17 +24,17 @@ export default class Index extends PureComponent {
   };
   getAllRegion = () => {
     this.props.dispatch({
-      type: 'global/getAllRegion',
-      callback: (data) => {
+      type: "global/getAllRegion",
+      callback: data => {
         if (data) {
           this.setState({ regions: data.list });
         }
-      },
+      }
     });
   };
   handleNext = () => {
     const form = this.props.form;
-    form.validateFields(['team_alias'], (error) => {
+    form.validateFields(["team_alias"], error => {
       if (!error) {
         this.setState({ current: 1 });
       }
@@ -48,22 +48,24 @@ export default class Index extends PureComponent {
     form.validateFields((error, values) => {
       if (!error) {
         this.props.dispatch({
-          type: 'global/InitTeam',
+          type: "global/InitTeam",
           payload: values,
           callback: () => {
             this.props.onOk && this.props.onOk();
-          },
+          }
         });
       }
     });
   };
-  handleRegionChange = (value) => {
+  handleRegionChange = value => {
     this.setState({ selectedRegion: value });
   };
   showRegionTip = () => {
-    const region = this.state.regions.filter(region => region.region_name === this.state.selectedRegion)[0];
+    const region = this.state.regions.filter(
+      region => region.region_name === this.state.selectedRegion
+    )[0];
 
-    if (region && region.scope !== 'private') {
+    if (region && region.scope !== "private") {
       return true;
     }
     return false;
@@ -73,18 +75,21 @@ export default class Index extends PureComponent {
     const { getFieldDecorator } = form;
     const is_public = this.props.rainbondInfo.is_public;
     return (
-      <div className={userStyles.container} style={{ position: 'relative', zIndex: 33 }}>
+      <div
+        className={userStyles.container}
+        style={{ position: "relative", zIndex: 33 }}
+      >
         <div className={userStyles.content}>
           <div className={userStyles.top}>
             <div className={userStyles.header}>
               <h1
                 style={{
-                  display: 'inline-block',
-                  verticalAlign: 'middle',
-                  marginBottom: 0,
+                  display: "inline-block",
+                  verticalAlign: "middle",
+                  marginBottom: 0
                 }}
               >
-                {is_public ? '欢迎使用好雨公有云平台' : '欢迎使用好雨Rainbond'}
+                欢迎使用智慧社会操作系统
               </h1>
               <div className={userStyles.desc}>简单2步, 开启云端之旅</div>
             </div>
@@ -95,40 +100,51 @@ export default class Index extends PureComponent {
                   <Step title="开通数据中心" description="" />
                 </Steps>
                 <Form.Item
-                  style={{ display: this.state.current === 0 ? 'block' : 'none' }}
+                  style={{
+                    display: this.state.current === 0 ? "block" : "none"
+                  }}
                   className={styles.formWrap}
                 >
-                  {getFieldDecorator('team_alias', {
+                  {getFieldDecorator("team_alias", {
                     rules: [
                       {
                         required: true,
-                        message: '请输入团队名称',
-                      },
-                    ],
+                        message: "请输入团队名称"
+                      }
+                    ]
                   })(<Input placeholder="请为您的团队起个名称吧" />)}
                 </Form.Item>
                 <Form.Item
-                  style={{ display: this.state.current === 1 ? 'block' : 'none' }}
+                  style={{
+                    display: this.state.current === 1 ? "block" : "none"
+                  }}
                   className={styles.formWrap}
                 >
-                  {getFieldDecorator('region_name', {
-                    initialValue: '',
+                  {getFieldDecorator("region_name", {
+                    initialValue: "",
                     rules: [
                       {
                         required: true,
-                        message: '请为团队选择一个数据中心',
-                      },
-                    ],
-                  })(<Select onChange={this.handleRegionChange} style={{ width: '100%' }}>
-                    <Option value="">请为团队选择一个数据中心</Option>
-                    {this.state.regions.map(region => (
-                      <Option value={region.region_name}>{region.region_alias}</Option>
-                    ))}
-                  </Select>)}
+                        message: "请为团队选择一个数据中心"
+                      }
+                    ]
+                  })(
+                    <Select
+                      onChange={this.handleRegionChange}
+                      style={{ width: "100%" }}
+                    >
+                      <Option value="">请为团队选择一个数据中心</Option>
+                      {this.state.regions.map(region => (
+                        <Option value={region.region_name}>
+                          {region.region_alias}
+                        </Option>
+                      ))}
+                    </Select>
+                  )}
                   {this.showRegionTip() && (
                     <p className={userStyles.desc}>
-                      4G内存，1G 高速分布式存储，{' '}
-                      <span style={{ color: '#1890ff' }}>免费试用7天</span>
+                      4G内存，1G 高速分布式存储，{" "}
+                      <span style={{ color: "#1890ff" }}>免费试用7天</span>
                     </p>
                   )}
                 </Form.Item>

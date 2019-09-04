@@ -1,7 +1,7 @@
 @import "~antd/lib/style/themes/default.less";
 
 .main {
-  width: 368px;
+  width : 100%;
   margin: 0 auto;
 
   :global {
@@ -11,13 +11,13 @@
   }
 
   h3 {
-    font-size: 16px;
+    font-size    : 16px;
     margin-bottom: 20px;
   }
 
   .getCaptcha {
     display: block;
-    width: 100%;
+    width  : 100%;
   }
 
   .submit {
@@ -25,7 +25,7 @@
   }
 
   .login {
-    float: right;
+    float      : right;
     line-height: @btn-height-lg;
   }
 }
@@ -34,6 +34,25 @@
 .warning,
 .error {
   transition: color 0.3s;
+}
+
+.registbottom {
+  display        : flex;
+  justify-content: space-around;
+  margin-bottom  : 24px;
+
+  button {
+    width      : 40%;
+    height     : 40px;
+    line-height: 40px;
+  }
+
+  a {
+    display    : inline-block;
+    width      : 40%;
+    height     : 40px;
+    line-height: 40px;
+  }
 }
 
 .success {
@@ -48,7 +67,7 @@
   color: @error-color;
 }
 
-.progress-pass > .progress {
+.progress-pass>.progress {
   :global {
     .ant-progress-bg {
       background-color: @warning-color;

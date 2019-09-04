@@ -164,7 +164,8 @@ class BasicLayout extends React.PureComponent {
     if (routerData[pathname] && routerData[pathname].name) {
       title = `${routerData[pathname].name} - ${title}`;
     }
-    return title;
+    // return title;
+    return '智慧社会操作系统';
   }
   getBashRedirect = () => {
     // According to the url parameter to redirect 这里是重定向的,重定向到 url 的 redirect 参数所示地址
