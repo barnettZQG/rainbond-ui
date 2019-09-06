@@ -7,26 +7,27 @@ import GlobalFooter from "../components/GlobalFooter";
 import styles from "./UserLayout.less";
 import logo from "../../public/logo.png";
 import { getRoutes } from "../utils/utils";
+import configureGlobal from "../utils/configureGlobal";
 
 const links = [
   {
     key: "help",
     title: "帮助",
-    href: "",
+    href: ""
   },
   {
     key: "privacy",
     title: "隐私",
-    href: "",
+    href: ""
   },
   {
     key: "terms",
     title: "条款",
-    href: "",
-  },
+    href: ""
+  }
 ];
 
-const copyright = (
+const copyright = configureGlobal.rainbondTextShow && (
   <div>
     Copyright
     <Icon type="copyright" />
@@ -52,8 +53,7 @@ class UserLayout extends React.PureComponent {
         rainbondInfo.title
       } | Rainbond is Serverless PaaS , A new generation of easy-to-use cloud management platforms based on kubernetes.`;
     }
-    // return title;
-    return '智慧社会操作系统';
+    return configureGlobal.rainbondTextShow && title;
   }
   render() {
     const { routerData, match, rainbondInfo } = this.props;
@@ -76,7 +76,7 @@ class UserLayout extends React.PureComponent {
                     style={{
                       display: "inline-block",
                       verticalAlign: "middle",
-                      marginBottom: 0,
+                      marginBottom: 0
                     }}
                   >
                     {rainbondInfo.title}
@@ -105,5 +105,5 @@ class UserLayout extends React.PureComponent {
 }
 
 export default connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo,
+  rainbondInfo: global.rainbondInfo
 }))(UserLayout);

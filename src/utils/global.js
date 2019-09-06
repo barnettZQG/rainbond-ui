@@ -456,7 +456,7 @@ const global = {
       creating: "部署中",
       expired: "过期",
       NOTREADY: "未就绪",
-      UNHEALTHY: "健康检测不通过"
+      UNHEALTHY: "不健康"
     };
     return statusColorMap[state] || statusColorMap.TheInternet;
   },
@@ -555,7 +555,7 @@ const global = {
       finalstatus == "timeout" ||
       (finalstatus == "complete" && status == "timeout")
     ) {
-      return <span style={{ color: "#F5212D" }}>操作已超时</span>;
+      return <span style={{ color: "rgba(0, 0, 0, 0.65)" }}>操作已超时</span>;
     }
 
     if (finalstatus == "empty" || finalstatus == "emptycomplete") {
@@ -575,18 +575,33 @@ const global = {
       LivenessProbeFailed: "#CD0200",
       ReadinessProbeFailed: "#CD0200",
       AbnormalShtdown: "#CD0200",
-      EventTypeAbnormalExited: "CD0200"
+      EventTypeAbnormalExited: "#CD0200",
+      AbnormalExited: "#CD0200"
     };
     return abnormalcolor[type] || "rgba(0,0,0,0.65)";
   },
   fetchStateOptTypeText(state) {
     const statusOptType = {
+      deploy: "构建服务",
+      delete: "删除服务",
+      HorizontalUpgrade: "水平升级",
+      VerticalUpgrade: "垂直升级",
+      create: "创建服务",
+      callback: "回滚",
+      "git-change": "代码仓库修改",
+      own_money: "欠费关闭",
+      add_label: "添加标签",
+      delete_label: "删除标签",
+      service_state: "应用状态修改",
+      reboot: "重启服务",
+      market_sync: "云市同步",
+      truncate: "删除服务",
       EventTypeAbnormalExited: "服务异常退出",
       OOMKilled: "发生OOM",
       LivenessProbeFailed: "健康检查不通过(重启)",
       ReadinessProbeFailed: "健康检查不通过(下线)",
       AbnormalShtdown: " 服务异常退出",
-
+      AbnormalExited: "服务异常退出",
       AbnormalRecovery: "恢复正常",
       "": "-",
       "create-service": "创建服务",
@@ -612,6 +627,11 @@ const global = {
       "upgrade-service": "升级服务",
       "delete-buildversion": "删除构建版本",
       "share-service": "分享服务",
+      "share-wb": "分享到内部市场",
+      "share-ws": "分享到云端市场",
+      "share-yb": "发布到市场",
+      "share-ys": "发布到市场",
+      updata: "更新服务",
       "add-service-dependency": "添加服务依赖",
       "delete-service-dependency": "删除服务依赖",
       "add-service-env": "添加服务环境变量",
