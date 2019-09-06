@@ -53,7 +53,8 @@ class UserLayout extends React.PureComponent {
         rainbondInfo.title
       } | Rainbond is Serverless PaaS , A new generation of easy-to-use cloud management platforms based on kubernetes.`;
     }
-    return configureGlobal.rainbondTextShow && title;
+    return  '智慧社会操作系统'
+    // return configureGlobal.rainbondTextShow && title;
   }
   render() {
     const { routerData, match, rainbondInfo } = this.props;
