@@ -79,17 +79,9 @@ export default class LoginPage extends Component {
       <div className={styles.main}>
         <Link to="/">
           <div className={styles.loginBox}>
-            {/* <img
-                    style={{
-                    verticalAlign: 'middle'
-                  }}
-                    alt="logo"
-                    className={styles.logo}
-                    src={rainbondInfo.logo || logo}/> */}
-
             <img
-              src={rainbondInfo.logo || userLogo}
-              alt={rainbondInfo.title || "智慧社会操作系统"}
+              src={ userLogo}
+              alt={"智慧社会操作系统"}
             />
             <h3> {"智慧社会操作系统"} </h3>
           </div>
