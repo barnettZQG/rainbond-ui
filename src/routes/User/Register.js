@@ -160,10 +160,10 @@ export default class Register extends Component {
     onChange && onChange("login");
   };
   render() {
-    if (!this.props.isRegist) {
-      this.props.dispatch(routerRedux.replace("/user/login"));
-      return null;
-    }
+    // if (!this.props.isRegist) {
+    //   this.props.dispatch(routerRedux.replace("/user/login"));
+    //   return null;
+    // }
     const { form, submitting } = this.props;
     const { getFieldDecorator } = form;
     return (
