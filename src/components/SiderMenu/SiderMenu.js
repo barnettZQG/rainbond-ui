@@ -335,7 +335,7 @@ export default class SiderMenu extends PureComponent {
               <img
                 style={{ maxHeight: 32, width: "90%" }}
                 src={logo}
-                alt={title || "logo"}
+                alt={title || "智慧社会操作系统"}
               />
             ) : (
               ""

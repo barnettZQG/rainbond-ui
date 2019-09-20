@@ -8,6 +8,7 @@ import styles from "./UserLayout.less";
 import logo from "../../public/logo.png";
 import { getRoutes } from "../utils/utils";
 import configureGlobal from "../utils/configureGlobal";
+import cookie from "../utils/cookie";
 
 const links = [
   {
@@ -45,19 +46,16 @@ class UserLayout extends React.PureComponent {
   getPageTitle() {
     const { routerData, location, rainbondInfo } = this.props;
     const { pathname } = location;
-    let title = `${
-      rainbondInfo.title
-    } | Rainbond is Serverless PaaS , A new generation of easy-to-use cloud management platforms based on kubernetes.`;
+    let title = rainbondInfo.title || "智慧社会操作系统";
     if (routerData[pathname] && routerData[pathname].name) {
-      title = `${routerData[pathname].name} - ${
-        rainbondInfo.title
-      } | Rainbond is Serverless PaaS , A new generation of easy-to-use cloud management platforms based on kubernetes.`;
+      title = `${routerData[pathname].name} - ${title}`;
     }
-    return  '智慧社会操作系统'
+    return title;
     // return configureGlobal.rainbondTextShow && title;
   }
   render() {
     const { routerData, match, rainbondInfo } = this.props;
+    const nouse = cookie.get("nouse");
 
     return (
       <DocumentTitle title={this.getPageTitle()}>

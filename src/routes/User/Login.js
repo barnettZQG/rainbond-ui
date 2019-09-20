@@ -80,10 +80,13 @@ export default class LoginPage extends Component {
         <Link to="/">
           <div className={styles.loginBox}>
             <img
-              src={ userLogo}
-              alt={"智慧社会操作系统"}
+              src={userLogo}
+              alt={(rainbondInfo && rainbondInfo.title) || "智慧社会操作系统"}
             />
-            <h3> {"智慧社会操作系统"} </h3>
+            <h3>
+              {" "}
+              {(rainbondInfo && rainbondInfo.title) || "智慧社会操作系统"}{" "}
+            </h3>
           </div>
         </Link>
 
