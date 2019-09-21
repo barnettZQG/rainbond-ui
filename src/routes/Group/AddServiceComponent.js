@@ -437,7 +437,7 @@ export default class AddServiceComponent extends PureComponent {
                   <Tooltip
                     placement="top"
                     title={
-                      !rainbondUtil.gitlabEnable(rainbondInfo) && "仅企业版可用"
+                      !rainbondUtil.githubEnable(rainbondInfo) && "仅企业版可用"
                     }
                   >
                     <Col
@@ -452,7 +452,7 @@ export default class AddServiceComponent extends PureComponent {
                       <p
                         className={styles.ServiceSmallTitle}
                         style={{
-                          color: rainbondUtil.gitlabEnable(rainbondInfo)
+                          color: rainbondUtil.githubEnable(rainbondInfo)
                             ? "rgba(16, 16, 16, 1)"
                             : "rgba(0, 0, 0, 0.25)"
                         }}
