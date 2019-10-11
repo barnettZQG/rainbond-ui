@@ -15,12 +15,11 @@ import {
   Icon,
   Tooltip,
   Table,
-  notification
+  notification,
+  Input
 } from "antd";
 import cookie from "../../utils/cookie";
-
 import { MiniArea, ChartCard } from "../../components/Charts";
-
 import NumberInfo from "../../components/NumberInfo";
 import numeral from "numeral";
 import EditGroupName from "../../components/AddOrEditGroup";
@@ -30,6 +29,8 @@ import configureGlobal from "../../utils/configureGlobal";
 import userUtil from "../../utils/user";
 import sourceUtil from "../../utils/source-unit";
 import guideutil from "../../utils/guide";
+
+const { Search } = Input;
 
 @connect(({ user, index, loading, global }) => ({
   currUser: user.currentUser,
@@ -54,6 +55,7 @@ export default class Index extends PureComponent {
       page: 1,
       page_size: 5,
       total: 0,
+      query: "",
       domainList: [],
       domainPage: 1,
       domainPage_size: 5,
@@ -143,16 +145,27 @@ export default class Index extends PureComponent {
     this.getTeam();
     configureGlobal.newbieGuideShow && this.getGuideState();
   }
-
+  handleSearchTeamList = query => {
+    this.setState(
+      {
+        page: 1,
+        query
+      },
+      () => {
+        this.getTeam();
+      }
+    );
+  };
   getTeam = () => {
-    const { page, page_size } = this.state;
+    const { page, page_size, query } = this.state;
     this.props.dispatch({
       type: "global/getTeamList",
       payload: {
         team_name: globalUtil.getCurrTeamName(),
         region: globalUtil.getCurrRegionName(),
         page,
-        page_size
+        page_size,
+        query
       },
       callback: res => {
         if (res && res._code == 200) {
@@ -903,15 +916,23 @@ export default class Index extends PureComponent {
             >
               {extraContent}
               <Card
-                style={{
-                  marginBottom: 10,
-                  height: 475
-                }}
+                className={styles.teamStyle}
                 title={
                   <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center"
+                    }}
                   >
-                    <span>团队应用</span>
+                    <span>
+                      团队应用
+                      <Search
+                        style={{ width: "260px", marginLeft: "50px" }}
+                        placeholder="请输入应用名称进行搜索"
+                        onSearch={this.handleSearchTeamList}
+                      />
+                    </span>
                     <a
                       style={{ fontSize: "14px", fontWeight: 400 }}
                       onClick={() => {
