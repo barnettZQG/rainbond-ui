@@ -25,6 +25,7 @@ import globalUtil from "../../utils/global";
 import configureGlobal from "../../utils/configureGlobal";
 import EditGroupName from "../../components/AddOrEditGroup";
 import { languageObj } from "../../utils/utils";
+import rainbondUtil from "../../utils/rainbond";
 
 const { Option } = Select;
 
@@ -269,6 +270,8 @@ export default class Index extends PureComponent {
 
   CreateApp = () => {
     const grade = this.getGuide("app_create");
+    const { rainbondInfo } = this.props;
+    let platform_url = rainbondUtil.documentPlatform_url(rainbondInfo);
     if (!grade) {
       return "";
     }
@@ -284,14 +287,12 @@ export default class Index extends PureComponent {
           style={{ color: grade.status ? "#1890ff" : "#A8A2A2" }}
         />
         <p>
-          应用是Rainbond核心抽象，由N个服务组件构成，它类似于Maven或Dotnet中的Project，通常是指一个完整的业务系统。在应用级抽象中用户通常关注以下知识：
+          应用是Rainbond核心抽象，由N个组件构成，它类似于Maven或Dotnet中的Project，通常是指一个完整的业务系统。在应用级抽象中用户通常关注以下知识：
         </p>
         <p>
-          1. 应用拓扑图可视化，便捷观察所有服务的运行状态{" "}
+          1. 应用拓扑图可视化，便捷观察所有组件的运行状态{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-manage/app-topology/`}
+            href={`${platform_url}docs/user-manual/app-manage/app-topology/`}
             target="_blank"
           >
             [参考文档]
@@ -300,9 +301,7 @@ export default class Index extends PureComponent {
         <p>
           2. 应用生命周期管理，涉及应用启停、升级和构建
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-manage/operation/`}
+            href={`${platform_url}docs/user-manual/app-manage/operation/`}
             target="_blank"
           >
             [参考文档]
@@ -311,9 +310,7 @@ export default class Index extends PureComponent {
         <p>
           3. 应用发布到企业应用市场{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-manage/share-app/`}
+            href={`${platform_url}docs/user-manual/app-manage/share-app/`}
             target="_blank"
           >
             [参考文档]
@@ -322,9 +319,7 @@ export default class Index extends PureComponent {
         <p>
           4. 应用整体的备份和恢复以及跨团队或数据中心迁移{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-manage/app-backup/`}
+            href={`${platform_url}docs/user-manual/app-manage/app-backup/`}
             target="_blank"
           >
             [参考文档]
@@ -351,6 +346,9 @@ export default class Index extends PureComponent {
 
   CreateSourceCode = () => {
     const grade = this.getGuide("source_code_service_create");
+    const { rainbondInfo } = this.props;
+    let platform_url = rainbondUtil.documentPlatform_url(rainbondInfo);
+
     if (!grade) {
       return "";
     }
@@ -367,7 +365,7 @@ export default class Index extends PureComponent {
         />
 
         <p>
-          基于源码创建并持续构建服务是面向开发者的最常用的功能，Rainbond支持
+          基于源码创建并持续构建组件是面向开发者的最常用的功能，Rainbond支持
           <a href={languageObj.Java} target="_blank">
             Java
           </a>
@@ -400,9 +398,7 @@ export default class Index extends PureComponent {
         <p>
           1. Rainbond如何支持各类型开发语言
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-creation/language-support/`}
+            href={`${platform_url}docs/user-manual/app-creation/language-support/`}
             target="_blank"
           >
             [参考文档]
@@ -411,9 +407,7 @@ export default class Index extends PureComponent {
         <p>
           2. Maven私服仓库如何对接到Rainbond
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/advanced-scenarios/devops/connection-maven-repository/`}
+            href={`${platform_url}docs/advanced-scenarios/devops/connection-maven-repository/`}
             target="_blank"
           >
             [参考文档]
@@ -422,9 +416,7 @@ export default class Index extends PureComponent {
         <p>
           3. 基于Git代码仓库的自动化持续构建
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/advanced-scenarios/devops/autobuild/`}
+            href={`${platform_url}docs/advanced-scenarios/devops/autobuild/`}
             target="_blank"
           >
             [参考文档]
@@ -433,9 +425,7 @@ export default class Index extends PureComponent {
         <p>
           4. 服务配置文件动态配置{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-service-manage/service-volume/#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6`}
+            href={`${platform_url}docs/user-manual/app-service-manage/service-volume/#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6`}
             target="_blank"
           >
             [参考文档]
@@ -443,9 +433,9 @@ export default class Index extends PureComponent {
         </p>
         {this.lineShow()}
         <p>
-          完成任务说明: 使用你自己的源码或基于JavaDemo源码创建服务：
+          完成任务说明: 使用你自己的源码或基于JavaDemo源码创建组件：
           <code style={{ color: "#000000" }}>
-            {`${configureGlobal.documentAddress}goodrain/java-maven-demo.git`}
+            https://github.com/goodrain/java-maven-demo.git
           </code>
         </p>
         <p style={{ textAlign: "center" }}>
@@ -455,7 +445,9 @@ export default class Index extends PureComponent {
             <div>
               <Button style={{ marginRight: "10px" }}>
                 <a
-                  href={`${configureGlobal.rainbondDocumentAddress}video.html`}
+                  href={`${rainbondUtil.documentPlatform_url(
+                    rainbondInfo
+                  )}video.html`}
                   target="_blank"
                 >
                   查看视频教程
@@ -471,7 +463,7 @@ export default class Index extends PureComponent {
                   );
                 }}
               >
-                创建源码服务，完成任务
+                创建源码组件，完成任务
               </Button>
             </div>
           )}
@@ -482,6 +474,9 @@ export default class Index extends PureComponent {
 
   CreateByImageTaskShow = () => {
     const grade = this.getGuide("image_service_create");
+    const { rainbondInfo } = this.props;
+    let platform_url = rainbondUtil.documentPlatform_url(rainbondInfo);
+
     if (!grade) {
       return "";
     }
@@ -497,25 +492,21 @@ export default class Index extends PureComponent {
           style={{ color: grade.status ? "#1890ff" : "#A8A2A2" }}
         />
         <p>
-          从镜像创建服务要求用户具备一定的容器化知识，本次任务我们将从镜像安装Mysql数据库，完成本次任务用户关注以下知识：
+          从镜像创建组件要求用户具备一定的容器化知识，本次任务我们将从镜像安装Mysql数据库，完成本次任务用户关注以下知识：
         </p>
         <p>
-          1. Rainbond支持基于Docker镜像创建服务的规范{" "}
+          1. Rainbond支持基于Docker镜像创建组件的规范{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-creation/image-support/`}
+            href={`${platform_url}docs/user-manual/app-creation/image-support/`}
             target="_blank"
           >
             [参考文档]
           </a>
         </p>
         <p>
-          2. Rainbond支持基于DockerCompose便捷创建多个服务的规范
+          2. Rainbond支持基于DockerCompose便捷创建多个组件的规范
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-creation/image-support/docker-compose/`}
+            href={`${platform_url}docs/user-manual/app-creation/image-support/docker-compose/`}
             target="_blank"
           >
             [参考文档]
@@ -528,7 +519,7 @@ export default class Index extends PureComponent {
           ) : (
             <div>
               <p>
-                复制以下DockerRun命令示例去创建服务：
+                复制以下DockerRun命令示例去创建组件：
                 <code style={{ color: "#000000" }}>
                   docker run -it -e MYSQL_ROOT_PASSWORD=rootpassword mysql
                 </code>
@@ -543,7 +534,7 @@ export default class Index extends PureComponent {
                   );
                 }}
               >
-                去创建服务
+                去创建组件
               </Button>
             </div>
           )}
@@ -614,6 +605,9 @@ export default class Index extends PureComponent {
 
   Service = () => {
     const grade = this.getGuide("service_connect_db");
+    const { rainbondInfo } = this.props;
+    let platform_url = rainbondUtil.documentPlatform_url(rainbondInfo);
+
     if (!grade) {
       return "";
     }
@@ -630,36 +624,30 @@ export default class Index extends PureComponent {
         />
 
         <p>
-          当前任务以服务连接数据库为例学习Rainbond服务之间内网通信机制，完成当前任务用户会关注以下知识：
+          当前任务以组件连接数据库为例学习Rainbond组件之间内网通信机制，完成当前任务用户会关注以下知识：
         </p>
         <p>
-          1. 服务建立依赖关系包含的通信原理（服务注册/服务发现){" "}
+          1. 组件建立依赖关系包含的通信原理（组件注册/组件发现){" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-service-manage/service-rely/#%E6%9C%8D%E5%8A%A1%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86`}
+            href={`${platform_url}docs/user-manual/app-service-manage/service-rely/#%E6%9C%8D%E5%8A%A1%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86`}
             target="_blank"
           >
             [参考文档]
           </a>
         </p>
         <p>
-          2. 服务公用连接信息变量如何设置
+          2. 组件公用连接信息变量如何设置
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-service-manage/service-rely/#%E6%9C%8D%E5%8A%A1%E8%BF%9E%E6%8E%A5%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86`}
+            href={`${platform_url}docs/user-manual/app-service-manage/service-rely/#%E6%9C%8D%E5%8A%A1%E8%BF%9E%E6%8E%A5%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86`}
             target="_blank"
           >
             [参考文档]
           </a>
         </p>
         <p>
-          3. 了解如何建立服务依赖关系{" "}
+          3. 了解如何建立组件依赖关系{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-service-manage/service-rely/#%E6%9C%8D%E5%8A%A1%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86`}
+            href={`${platform_url}docs/user-manual/app-service-manage/service-rely/#%E6%9C%8D%E5%8A%A1%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86`}
             target="_blank"
           >
             [参考文档]
@@ -667,7 +655,7 @@ export default class Index extends PureComponent {
         </p>
         {this.lineShow()}
         <p>
-          完成任务说明：设置上一个任务创建的数据库服务的连接信息(比如MYSQL_USER,MYSQL_PASSWORD等)，将源码创建的服务依赖数据库服务建立依赖关系，源码服务通过环境变量获取数据库连接信息即可连接数据库
+          完成任务说明：设置上一个任务创建的数据库组件的连接信息(比如MYSQL_USER,MYSQL_PASSWORD等)，将源码创建的组件依赖数据库组件建立依赖关系，源码组件通过环境变量获取数据库连接信息即可连接数据库
         </p>
         <p style={{ textAlign: "center" }}>
           {grade.status ? this.completedShow() : ""}
@@ -677,6 +665,9 @@ export default class Index extends PureComponent {
   };
   ReleaseMarket = () => {
     const grade = this.getGuide("share_app");
+    const { rainbondInfo } = this.props;
+    let platform_url = rainbondUtil.documentPlatform_url(rainbondInfo);
+
     if (!grade) {
       return "";
     }
@@ -703,9 +694,7 @@ export default class Index extends PureComponent {
         <p>
           1. 应用发布到企业应用市场{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-manage/share-app/`}
+            href={`${platform_url}docs/user-manual/app-manage/share-app/`}
             target="_blank"
           >
             [参考文档]
@@ -714,9 +703,7 @@ export default class Index extends PureComponent {
         <p>
           2. 应用支持基于应用市场一键安装的关键因素{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/app-store/app-specification/`}
+            href={`${platform_url}docs/user-manual/app-store/app-specification/`}
             target="_blank"
           >
             [参考文档]
@@ -741,6 +728,9 @@ export default class Index extends PureComponent {
 
   AccessStrategy = () => {
     const grade = this.getGuide("custom_gw_rule");
+    const { rainbondInfo } = this.props;
+    let platform_url = rainbondUtil.documentPlatform_url(rainbondInfo);
+
     if (!grade) {
       return "";
     }
@@ -762,20 +752,16 @@ export default class Index extends PureComponent {
         />
 
         <p>
-          需要被外网访问的服务需要配置网关访问策略，
-          {configureGlobal.rainbondTextShow && (
-            <a href={languageObj.Rainbond} target="_blank">
-              Rainbond
-            </a>
-          )}
+          需要被外网访问的组件需要配置网关访问策略，
+          <a href={languageObj.Rainbond} target="_blank">
+            Rainbond
+          </a>
           网关支持HTTP/WebSocket/TCP/UDP服务访问协议。HTTP类策略根据域名等信息进行路由匹配，TCP类策略通过IP+端口进行路由匹配。完成当前任务用户会关注以下功能：
         </p>
         <p>
           1. HTTP访问策略配置{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/gateway/traffic-control/#%E6%B7%BB%E5%8A%A0-http-%E7%AD%96%E7%95%A5`}
+            href={`${platform_url}docs/user-manual/gateway/traffic-control/#%E6%B7%BB%E5%8A%A0-http-%E7%AD%96%E7%95%A5`}
             target="_blank"
           >
             [参考文档]
@@ -784,9 +770,7 @@ export default class Index extends PureComponent {
         <p>
           2. HTTPs证书管理{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/gateway/cert-management/`}
+            href={`${platform_url}docs/user-manual/gateway/cert-management/`}
             target="_blank"
           >
             [参考文档]
@@ -795,9 +779,7 @@ export default class Index extends PureComponent {
         <p>
           3. TCP访问策略配置{" "}
           <a
-            href={`${
-              configureGlobal.rainbondDocumentAddress
-            }docs/user-manual/gateway/traffic-control/#tcp-%E8%AE%BF%E9%97%AE%E7%AD%96%E7%95%A5`}
+            href={`${platform_url}docs/user-manual/gateway/traffic-control/#tcp-%E8%AE%BF%E9%97%AE%E7%AD%96%E7%95%A5`}
             target="_blank"
           >
             [参考文档]
@@ -851,21 +833,19 @@ export default class Index extends PureComponent {
           }}
         />
         <p>
-          服务插件体系是对服务治理功能的扩展方式，
-          {configureGlobal.rainbondTextShow && (
-            <a href={languageObj.Rainbond} target="_blank">
-              Rainbond
-            </a>
-          )}
-          默认提供了性能分析插件和网络治理插件。当前任务为前置任务安装的Java服务安装性能分析插件为例。完成当前任务用户会关注以下知识：
+          组件插件体系是对组件治理功能的扩展方式，
+          <a href={languageObj.Rainbond} target="_blank">
+            Rainbond
+          </a>
+          默认提供了性能分析插件和网络治理插件。当前任务为前置任务安装的Java组件安装性能分析插件为例。完成当前任务用户会关注以下知识：
         </p>
         <p>1. 性能分析插件的安装</p>
-        <p>2. 服务开通性能分析插件</p>
+        <p>2. 组件开通性能分析插件</p>
         <p>3. 性能分析结果的实时展示,支持HTTP协议和Mysql协议的服务</p>
         {this.lineShow()}
         <p>
-          完成任务说明：在插件管理中安装已集成的性能分析插件，确定插件构建成功后前往上述任务创建的具有HTTP协议或Mysql协议端口的服务管理面板，插件栏目中开通性能分析插件并更新服务，
-          访问服务并观看服务的监控栏目数据。
+          完成任务说明：在插件管理中安装已集成的性能分析插件，确定插件构建成功后前往上述任务创建的具有HTTP协议或Mysql协议端口组件管理面板，插件栏目中开通性能分析插件并更新组件，
+          访问组件并观看组件的监控栏目数据。
         </p>
         <p style={{ textAlign: "center" }}>
           {grade.status ? (
@@ -900,8 +880,8 @@ export default class Index extends PureComponent {
         status: guideUtil.getStatus("app_create", GuideList)
       },
       {
-        title: "基于源码创建服务",
-        content: configureGlobal.rainbondTextShow && this.CreateSourceCode(),
+        title: "基于源码创建组件",
+        content: this.CreateSourceCode(),
         status: guideUtil.getStatus("source_code_service_create", GuideList)
       },
       {
@@ -911,7 +891,7 @@ export default class Index extends PureComponent {
         status: guideUtil.getStatus("image_service_create", GuideList)
       },
       {
-        title: "服务连接数据库",
+        title: "组件连接数据库",
         content: this.Service(),
         status: guideUtil.getStatus("service_connect_db", GuideList)
       },
@@ -1081,9 +1061,6 @@ export default class Index extends PureComponent {
                           width: 270,
                           marginRight: 15
                         }}
-                        // onChange={() => {
-                        //   this.handleOnchange();
-                        // }}
                       >
                         {(this.props.groups || []).map(group => (
                           <Option key={group.group_id} value={group.group_id}>
@@ -1092,31 +1069,6 @@ export default class Index extends PureComponent {
                         ))}
                       </Select>
                     )}
-                    {/*
-              <Form.Item {...formItemLayout} label="服务组件名称">
-                {getFieldDecorator("service_cname", {
-                  initialValue: "",
-                  rules: [
-                    { required: true, message: "请选择要所属服务组件" },
-                  ],
-                })(
-                  // ServiceList
-                // <Input placeholder="请为创建的服务组件起个名字吧" />
-                <Select
-                placeholder="请选择要所属应用"
-                style={{ display: "inline-block", width: 270, marginRight: 15 }}
-                onChange={() => {
-                  this.handleOnchange();
-                }}
-              >
-                {(this.props.groups || []).map(group => (
-                  <Option key={group.group_id} value={group.group_id}>{group.group_name}</Option>
-                ))}
-              </Select>
-                )}
-              </Form.Item> */}
-
-                    {/* <Button onClick={this.onAddGroup} >新建应用</Button> */}
                   </Form.Item>
                 </Form>
               </Modal>

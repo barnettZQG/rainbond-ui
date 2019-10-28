@@ -53,16 +53,22 @@ export default class Index extends PureComponent {
   cancelAddGroup = () => {
     this.setState({ addGroup: false });
   };
-  checkURL = (rule, value, callback) => {
+  getUrlCheck() {
     if (this.state.serverType == "svn") {
-      if (!/^(svn:\/\/|http:\/\/|https:\/\/).+$/gi.test(value)) {
-        callback("不合法");
-      }
-    } else if (!/^(.+@.+\.git)|([^@]+\.git(\?.+)?)$/gi.test(value)) {
-      callback("不合法");
+      return /^(svn:\/\/|http:\/\/|https:\/\/).+$/gi;
     }
-    callback();
+    return /^(git@|svn:\/\/|http:\/\/|https:\/\/).+$/gi;
+  }
+
+  checkURL = (rule, value, callback) => {
+    const urlCheck = this.getUrlCheck();
+    if (urlCheck.test(value)) {
+      callback();
+    } else {
+      callback("非法仓库地址");
+    }
   };
+
   handleAddGroup = vals => {
     const { setFieldsValue } = this.props.form;
 
@@ -177,8 +183,8 @@ export default class Index extends PureComponent {
 
     const gitUrl = getFieldValue("git_url");
 
-    let isHttp = /^(http:\/\/|https:\/\/)/.test(gitUrl || "");
-    let urlCheck = /^(.+@.+\.git)|([^@]+\.git(\?.+)?)$/gi;
+    let isHttp = /(http|https):\/\/([\w.]+\/?)\S*/.test(gitUrl || "");
+    let urlCheck = /^(git@|svn:\/\/|http:\/\/|https:\/\/).+$/gi;
     if (this.state.serverType == "svn") {
       isHttp = true;
       urlCheck = /^(svn:\/\/|http:\/\/|https:\/\/).+$/gi;
@@ -246,11 +252,11 @@ export default class Index extends PureComponent {
               <Button onClick={this.onAddGroup}>新建应用</Button>
             ) : null}
           </Form.Item>
-          <Form.Item {...formItemLayout} label="服务组件名称">
+          <Form.Item {...formItemLayout} label="组件名称">
             {getFieldDecorator("service_cname", {
               initialValue: data.service_cname || "",
-              rules: [{ required: true, message: "要创建的服务组件还没有名字" }]
-            })(<Input placeholder="请为创建的服务组件起个名字吧" />)}
+              rules: [{ required: true, message: "要创建的组件还没有名字" }]
+            })(<Input placeholder="请为创建的组件起个名字吧" />)}
           </Form.Item>
           <Form.Item {...formItemLayout} label="仓库地址">
             {getFieldDecorator("git_url", {
@@ -335,7 +341,7 @@ export default class Index extends PureComponent {
                       type="primary"
                       loading={createAppByCodeLoading}
                     >
-                      新建服务
+                      新建组件
                     </Button>,
                     false
                   )
@@ -345,7 +351,7 @@ export default class Index extends PureComponent {
                       type="primary"
                       loading={createAppByCodeLoading}
                     >
-                      新建应用
+                      确认创建
                     </Button>
                   )}
             </Form.Item>

@@ -1152,14 +1152,14 @@ export async function editEvns(
     team_name,
     app_alias,
     name,
-    attr_name,
+    ID,
     attr_value
   }
 ) {
   return request(
     `${config.baseUrl}/console/teams/${body.team_name}/apps/${
       body.app_alias
-    }/envs/${body.attr_name}`,
+    }/envs/${body.ID}`,
     {
       method: "put",
       data: {
@@ -1177,13 +1177,13 @@ export async function deleteEvns(
   body = {
     team_name,
     app_alias,
-    attr_name
+    ID
   }
 ) {
   return request(
     `${config.baseUrl}/console/teams/${body.team_name}/apps/${
       body.app_alias
-    }/envs/${body.attr_name}`,
+    }/envs/${body.ID}`,
     { method: "delete" }
   );
 }
@@ -1195,14 +1195,14 @@ export async function putTransfer(
   body = {
     team_name,
     app_alias,
-    attr_name,
+    ID,
     scope
   }
 ) {
   return request(
     `${config.baseUrl}/console/teams/${body.team_name}/apps/${
       body.app_alias
-    }/envs/${body.attr_name}`,
+    }/envs/${body.ID}`,
     {
       method: "patch",
       data: {

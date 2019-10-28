@@ -151,6 +151,8 @@ class BasicLayout extends React.PureComponent {
         if (res && (res.status === 403 || res.status === 404)) {
           cookie.remove("token");
           cookie.remove("token", { domain: "" });
+          cookie.remove("newbie_guide");
+          cookie.remove("platform_url");
           location.reload();
         }
       }
@@ -346,6 +348,7 @@ class BasicLayout extends React.PureComponent {
       if (hasRegion) {
         region =
           userUtil.hasTeamAndRegion(currentUser, currTeam, currRegion) || {};
+
         isRegionMaintain =
           region.region_status === "3" && !userUtil.isSystemAdmin(currentUser);
       }
@@ -366,7 +369,7 @@ class BasicLayout extends React.PureComponent {
         // 数据中心维护中
         if (isRegionMaintain || nouse) {
           return (
-            <div style={{ textAlign: "center", padding: "50px 0" }}>
+            <div style={{ textAlign: "center", padding: "200px 0" }}>
               <Icon
                 style={{ fontSize: 40, marginBottom: 32, color: "red" }}
                 type="warning"
@@ -420,9 +423,18 @@ class BasicLayout extends React.PureComponent {
         <Layout>
           {!isRegionMaintain && hasRegion && (
             <SiderMenu
-              title={rainbondInfo.title}
+              title={
+                rainbondInfo &&
+                rainbondInfo.title !== undefined &&
+                rainbondInfo.title
+              }
               currentUser={currentUser}
-              logo={rainbondInfo.logo || logo}
+              logo={
+                (rainbondInfo &&
+                  rainbondInfo.logo !== undefined &&
+                  rainbondInfo.logo) ||
+                logo
+              }
               Authorized={Authorized}
               menuData={getMenuData(groups)}
               collapsed={collapsed}
@@ -435,7 +447,11 @@ class BasicLayout extends React.PureComponent {
           <Layout>
             <GlobalHeader
               logo={logo}
-              isPubCloud={rainbondInfo.is_public}
+              isPubCloud={
+                rainbondInfo &&
+                rainbondInfo.is_public !== undefined &&
+                rainbondInfo.is_public
+              }
               notifyCount={notifyCount}
               currentUser={currentUser}
               fetchingNotices={fetchingNotices}
@@ -468,7 +484,7 @@ class BasicLayout extends React.PureComponent {
       <Fragment>
         <DocumentTitle title={this.getPageTitle()}>
           <CheckUserInfo
-            rainbondInfo={this.props.rainbondInfo}
+            rainbondInfo={rainbondInfo}
             onCurrTeamNoRegion={this.handleCurrTeamNoRegion}
             userInfo={currentUser}
             onInitTeamOk={this.handleInitTeamOk}
@@ -502,7 +518,9 @@ class BasicLayout extends React.PureComponent {
           />
         )}
         <Loading />
-        {rainbondInfo.is_public && <Meiqia />}
+        {rainbondInfo &&
+          rainbondInfo.is_public !== undefined &&
+          rainbondInfo.is_public && <Meiqia />}
         {this.props.payTip && <PayTip dispatch={this.props.dispatch} />}
         {this.props.memoryTip && (
           <MemoryTip

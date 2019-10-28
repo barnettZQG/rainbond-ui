@@ -48,6 +48,7 @@ class Index extends PureComponent {
   render() {
     const { logList, has_next, recordLoading, isopenLog } = this.props;
     const { logVisible, selectEventID, showSocket } = this.state;
+    const logsvg = globalUtil.fetchSvg("logs", "#cccccc");
     return (
       <Card bordered={false} title="操作记录" loading={recordLoading}>
         <Row gutter={24}>
@@ -65,7 +66,6 @@ class Index extends PureComponent {
                   EventID,
                   create_time
                 } = item;
-                // console.log('logListlogListlogListlogList',EventID)
                 let UserNames =
                   UserName == "system"
                     ? "@系统"
@@ -134,7 +134,7 @@ class Index extends PureComponent {
                         </span>
                       </span>
                     </div>
-                    <div style={{ textAlign: "right" }}>
+                    <div>
                       {isopenLog &&
                         FinalStatus === "" &&
                         OptType &&
@@ -145,8 +145,17 @@ class Index extends PureComponent {
                           FinalStatus == "" ? true : false
                         )}
                       {SynType == 0 && (
-                        <Tooltip visible={FinalStatus == ""} title="查看日志">
-                          <span
+                        <Tooltip
+                          visible={FinalStatus == "" ? true : false}
+                          placement="top"
+                          arrowPointAtCenter={true}
+                          autoAdjustOverflow={false}
+                          title="查看日志"
+                        >
+                          <div
+                            style={{
+                              width: "16px"
+                            }}
                             onClick={() => {
                               this.showLogModal(
                                 EventID,
@@ -154,8 +163,8 @@ class Index extends PureComponent {
                               );
                             }}
                           >
-                            {globalUtil.fetchSvg("logs", "#cccccc")}
-                          </span>
+                            {logsvg}
+                          </div>
                         </Tooltip>
                       )}
                     </div>

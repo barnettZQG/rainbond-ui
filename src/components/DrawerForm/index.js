@@ -107,7 +107,7 @@ class DrawerForm extends PureComponent {
       }
     });
   };
-  /**获取服务组件 */
+  /**获取组件 */
   handleServices = group_id => {
     const { isPerform } = this.state;
     const { dispatch, editInfo } = this.props;
@@ -425,7 +425,7 @@ class DrawerForm extends PureComponent {
             </h3>
             <FormItem
               {...formItemLayout}
-              label="应用(组)"
+              label="应用"
               style={{ zIndex: 999 }}
             >
               {getFieldDecorator("group_id", {
@@ -433,7 +433,7 @@ class DrawerForm extends PureComponent {
                 initialValue: (editInfo && editInfo.g_id + "") || undefined
               })(
                 <Select
-                  placeholder="请选择要所属应用组"
+                  placeholder="请选择要所属应用"
                   onChange={this.handleServices}
                 >
                   {(groups || []).map(group => {
@@ -448,7 +448,7 @@ class DrawerForm extends PureComponent {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="服务组件"
+              label="组件"
               style={{ zIndex: 999 }}
             >
               {getFieldDecorator("service_id", {
@@ -462,7 +462,7 @@ class DrawerForm extends PureComponent {
                     : undefined
               })(
                 <Select
-                  placeholder="请选择服务组件"
+                  placeholder="请选择组件"
                   onChange={this.handlePorts}
                 >
                   {(this.state.serviceComponentList || []).map(

@@ -63,6 +63,28 @@ const global = {
   },
   fetchSvg(type, color) {
     const svgType = {
+      application: (
+        <svg
+          t="1571132584539"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="6191"
+          width="32"
+          height="32"
+        >
+          <path
+            d="M514.699863 1024c-15.899196 0-31.798391-4.099793-46.097667-12.199383l-363.981584-206.889532c-28.898538-16.299175-46.997622-47.197612-47.197612-80.495927l-2.799859-418.678817c-0.19999-33.19832 17.499115-64.296747 46.097668-81.195892L461.902535 12.751165c28.698548-16.79915 64.396742-16.99914 93.395274-0.59997l363.981584 206.889532c28.798543 16.39917 46.997622 47.197612 47.297607 80.495928l2.799859 418.778811c0.19999 33.298315-17.499115 64.396742-46.197663 81.195892L561.99747 1011.200648c-14.499266 8.49957-30.898437 12.799352-47.297607 12.799352z m-5.599716-958.651496c-4.899752 0-9.799504 1.299934-14.199282 3.799807L133.819134 280.937596c-8.599565 4.999747-13.899297 14.399271-13.799301 24.398765l2.799858 418.678817c0.099995 9.999494 5.499722 19.199029 14.099286 24.098781L501.000557 955.003491c8.69956 4.999747 19.499013 4.899752 28.098578-0.19999L890.180866 743.014217h0.099995c8.599565-4.999747 13.799302-14.399271 13.799301-24.398766L901.180309 300.036629c-0.099995-9.999494-5.599717-19.299024-14.199281-24.198775L522.999443 68.948322c-4.199788-2.399879-9.09954-3.599818-13.899296-3.599818z"
+            fill={color || "#1890ff"}
+            p-id="6192"
+          />
+          <path
+            d="M512 817.810432c-18.099084 0-32.698346-14.599261-32.698346-32.698345l-0.099995-267.686457-231.688277-133.99322c-15.599211-8.999545-20.998938-28.998533-11.899398-44.597744 9.09954-15.599211 28.998533-20.998938 44.597743-11.899398l0.79996 0.39998 230.988313 133.393251 231.888267-133.793231c15.599211-9.09954 35.598199-3.799808 44.597744 11.899398 9.09954 15.599211 3.699813 35.598199-11.899398 44.597744l-231.888267 133.99322-0.099995 267.686457c0.099995 18.099084-14.499266 32.698346-32.598351 32.698345z"
+            fill={color || "#1890ff"}
+            p-id="6193"
+          />
+        </svg>
+      ),
       logs: (
         <svg
           style={{
@@ -541,7 +563,7 @@ const global = {
         "内存不足, 建议为程序分配更多内存, 或检查程序是否合理使用内存",
       Unhealthy:
         "健康检测不通过, 请检查程序的端口是否可用, 以及健康检测配置是否正确",
-      Initiating: "等待启动中, 请检查该服务所依赖的服务是否已经正常启动"
+      Initiating: "等待启动中, 请检查该组件所依赖的组件是否已经正常启动"
     };
     return adviceType[type] || type;
   },
@@ -582,84 +604,84 @@ const global = {
   },
   fetchStateOptTypeText(state) {
     const statusOptType = {
-      deploy: "构建服务",
-      delete: "删除服务",
+      deploy: "构建组件",
+      delete: "删除组件",
       HorizontalUpgrade: "水平升级",
       VerticalUpgrade: "垂直升级",
-      create: "创建服务",
+      create: "创建组件",
       callback: "回滚",
       "git-change": "代码仓库修改",
       own_money: "欠费关闭",
       add_label: "添加标签",
       delete_label: "删除标签",
       service_state: "应用状态修改",
-      reboot: "重启服务",
+      reboot: "重启组件",
       market_sync: "云市同步",
-      truncate: "删除服务",
-      EventTypeAbnormalExited: "服务异常退出",
+      truncate: "删除组件",
+      EventTypeAbnormalExited: "组件异常退出",
       OOMKilled: "发生OOM",
       LivenessProbeFailed: "健康检查不通过(重启)",
       ReadinessProbeFailed: "健康检查不通过(下线)",
-      AbnormalShtdown: " 服务异常退出",
-      AbnormalExited: "服务异常退出",
+      AbnormalShtdown: " 组件异常退出",
+      AbnormalExited: "组件异常退出",
       AbnormalRecovery: "恢复正常",
       "": "-",
-      "create-service": "创建服务",
-      "batch-build-service": "批量构建服务",
-      "batch-start-service": "批量启动服务",
-      "batch-stop-service": "批量停止服务",
-      "batch-upgrade-service": "批量升级服务",
-      "build-service": "构建服务",
-      build: "构建服务",
-      upgrade: "滚动升级服务",
-      "start-service": "启动服务",
-      start: "启动服务",
-      "stop-service": "停止服务",
-      stop: "停止服务",
-      "restart-service": "重启服务",
-      restart: "重启服务",
-      "vertical-service": "垂直扩展服务",
-      vertical: "垂直扩展服务",
-      "horizontal-service": "水平扩展服务",
-      horizontal: "水平扩展服务",
-      "set-language": "设置服务语言",
-      "delete-service": "删除服务",
-      "upgrade-service": "升级服务",
+      "create-service": "创建组件",
+      "batch-build-service": "批量构建组件",
+      "batch-start-service": "批量启动组件",
+      "batch-stop-service": "批量停止组件",
+      "batch-upgrade-service": "批量升级组件",
+      "build-service": "构建组件",
+      build: "构建组件",
+      upgrade: "滚动升级组件",
+      "start-service": "启动组件",
+      start: "启动组件",
+      "stop-service": "停止组件",
+      stop: "停止组件",
+      "restart-service": "重启组件",
+      restart: "重启组件",
+      "vertical-service": "垂直扩展组件",
+      vertical: "垂直扩展组件",
+      "horizontal-service": "水平扩展组件",
+      horizontal: "水平扩展组件",
+      "set-language": "设置组件语言",
+      "delete-service": "删除组件",
+      "upgrade-service": "升级组件",
       "delete-buildversion": "删除构建版本",
-      "share-service": "分享服务",
+      "share-service": "分享组件",
       "share-wb": "分享到内部市场",
       "share-ws": "分享到云端市场",
       "share-yb": "发布到市场",
       "share-ys": "发布到市场",
-      updata: "更新服务",
-      "add-service-dependency": "添加服务依赖",
-      "delete-service-dependency": "删除服务依赖",
-      "add-service-env": "添加服务环境变量",
-      "update-service-env": "更新服务环境变量",
-      "delete-service-env": "删除服务环境变量",
-      "add-service-port": "添加服务端口",
-      "update-service-port-old": "更新服务端口",
-      "update-service-port": "更新服务端口",
-      "delete-service-port": "删除服务端口",
-      "handle-service-outerport": "修改服务对外端口",
-      "handle-service-innerport": "修改服务对内端口",
-      "change-service-lbport": "修改服务LB端口",
+      updata: "更新组件",
+      "add-service-dependency": "添加组件依赖",
+      "delete-service-dependency": "删除组件依赖",
+      "add-service-env": "添加组件环境变量",
+      "update-service-env": "更新组件环境变量",
+      "delete-service-env": "删除组件环境变量",
+      "add-service-port": "添加组件端口",
+      "update-service-port-old": "更新组件端口",
+      "update-service-port": "更新组件端口",
+      "delete-service-port": "删除组件端口",
+      "handle-service-outerport": "修改组件对外端口",
+      "handle-service-innerport": "修改组件对内端口",
+      "change-service-lbport": "修改组件LB端口",
       "rollback-service": "回滚",
-      "add-service-volume": "添加服务持久化存储",
-      "update-service-volume": "更新服务持久化存储",
-      "delete-service-volume": "删除服务持久化存储",
-      "add-service-depvolume": "添加服务依赖存储",
-      "delete-service-depvolume": "删除服务依赖存储",
-      "add-service-probe": "添加服务探针",
-      "update-service-probe": "更新服务探针",
-      "delete-service-probe": "删除服务探针",
-      "add-service-label": "添加服务标签",
-      "update-service-label": "更新服务标签",
-      "delete-service-label": "删除服务标签",
-      "add-thirdpart-service": "添加第三方服务",
-      "update-thirdpart-service": "更新第三方服务",
-      "delete-thirdpart-service": "删除第三方服务",
-      "update-service-gateway-rule": "更新服务网关规则",
+      "add-service-volume": "添加组件持久化存储",
+      "update-service-volume": "更新组件持久化存储",
+      "delete-service-volume": "删除组件持久化存储",
+      "add-service-depvolume": "添加组件依赖存储",
+      "delete-service-depvolume": "删除组件依赖存储",
+      "add-service-probe": "添加组件探针",
+      "update-service-probe": "更新组件探针",
+      "delete-service-probe": "删除组件探针",
+      "add-service-label": "添加组件标签",
+      "update-service-label": "更新组件标签",
+      "delete-service-label": "删除组件标签",
+      "add-thirdpart-service": "添加第三方组件",
+      "update-thirdpart-service": "更新第三方组件",
+      "delete-thirdpart-service": "删除第三方组件",
+      "update-service-gateway-rule": "更新组件网关规则",
       "app-restore-envs": "重新加载应用环境变量",
       "app-restore-ports": "重新加载应用端口",
       "app-restore-volumes": "重新加载应用存储",

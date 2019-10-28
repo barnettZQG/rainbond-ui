@@ -24,9 +24,10 @@ import ModifyUrl from "./modify-url";
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 
-@connect(({ user, appControl }) => ({
+@connect(({ user, appControl, global }) => ({
   currUser: user.currentUser,
-  appDetail: appControl.appDetail
+  appDetail: appControl.appDetail,
+  rainbondInfo: global.rainbondInfo
 }))
 export default class CreateCheck extends PureComponent {
   constructor(props) {
@@ -465,7 +466,7 @@ export default class CreateCheck extends PureComponent {
     return (
       <Result
         type="error"
-        title="服务构建源检测未通过"
+        title="组件构建源检测未通过"
         description="请核对并修改以下信息后，再重新检测。"
         extra={extra}
         actions={ServiceGetData ? "" : actions}
@@ -531,6 +532,7 @@ export default class CreateCheck extends PureComponent {
   };
 
   renderSuccess = () => {
+    const { rainbondInfo } = this.props;
     const { ServiceGetData, is_deploy, appDetail } = this.state;
     const serviceInfo = this.state.serviceInfo;
     const extra =
@@ -565,7 +567,7 @@ export default class CreateCheck extends PureComponent {
             >
               高级设置
             </Button>
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <Button
                 onClick={this.handleBuild}
                 type="primary"
@@ -575,26 +577,24 @@ export default class CreateCheck extends PureComponent {
                 {" "}
                 创建{" "}
               </Button>
-              <div>
-                <Tooltip
-                  placement="topLeft"
-                  title={
-                    <p>
-                      取消本选项你可以先对服务进行
-                      <br />
-                      高级设置再构建启动。
-                    </p>
-                  }
+              <Tooltip
+                placement="topLeft"
+                title={
+                  <p>
+                    取消本选项你可以先对组件进行
+                    <br />
+                    高级设置再构建启动。
+                  </p>
+                }
+              >
+                <Radio
+                  size="small"
+                  onClick={this.renderSuccessOnChange}
+                  checked={is_deploy}
                 >
-                  <Radio
-                    size="small"
-                    onClick={this.renderSuccessOnChange}
-                    checked={is_deploy}
-                  >
-                    并构建启动
-                  </Radio>
-                </Tooltip>
-              </div>
+                  并构建启动
+                </Radio>
+              </Tooltip>
             </div>
           </div>
         ])
@@ -638,7 +638,7 @@ export default class CreateCheck extends PureComponent {
                 placement="topLeft"
                 title={
                   <p>
-                    取消本选项你可以先对服务进行
+                    取消本选项你可以先对组件进行
                     <br />
                     高级设置再构建启动。
                   </p>
@@ -702,8 +702,8 @@ export default class CreateCheck extends PureComponent {
         type="success"
         title={
           appDetail.service_source == "third_party"
-            ? "第三方服务检测通过"
-            : "服务构建源检测通过"
+            ? "第三方组件检测通过"
+            : "组件构建源检测通过"
         }
         description={
           appDetail.service_source == "third_party" ? (
@@ -711,21 +711,16 @@ export default class CreateCheck extends PureComponent {
           ) : (
             <div>
               <div>
-                服务构建源检测通过仅代表平台可以检测到代码语言类型和代码源。
+                组件构建源检测通过仅代表平台可以检测到代码语言类型和代码源。
               </div>
-              90%以上的用户在检测通过后可部署成功，
-              {configureGlobal.rainbondTextShow && (
-                <span>
-                  ，如遇部署失败可参考{" "}
-                  <a
-                    href="http://www.rainbond.com/docs/user-manual/app-creation/language-support/"
-                    target="_blank"
-                  >
-                    Rainbond源码支持规范
-                  </a>{" "}
-                  对代码进行调整。
-                </span>
-              )}
+              90%以上的用户在检测通过后可部署成功，如遇部署失败，可参考{" "}
+              <a
+                href="http://www.rainbond.com/docs/user-manual/app-creation/language-support/"
+                target="_blank"
+              >
+                Rainbond源码支持规范
+              </a>{" "}
+              对代码进行调整。
             </div>
           )
         }
@@ -739,6 +734,7 @@ export default class CreateCheck extends PureComponent {
   renderMoreService = () => {
     const { ServiceGetData, is_deploy, appDetail, is_multi } = this.state;
     const serviceInfo = this.state.serviceInfo;
+    const { rainbondInfo } = this.props;
     const extra =
       serviceInfo && serviceInfo.length > 0
         ? serviceInfo.map(item => (
@@ -761,7 +757,7 @@ export default class CreateCheck extends PureComponent {
               放弃创建{" "}
             </Button>
             <Button type="primary" onClick={this.handleMoreService}>
-              进入多服务构建
+              进入多组件构建
             </Button>
           </div>
         ])
@@ -791,7 +787,7 @@ export default class CreateCheck extends PureComponent {
                   placement="topLeft"
                   title={
                     <p>
-                      取消本选项你可以先对服务进行
+                      取消本选项你可以先对组件进行
                       <br />
                       高级设置再构建启动。
                     </p>
@@ -820,7 +816,10 @@ export default class CreateCheck extends PureComponent {
                 loading={this.state.buildAppLoading}
               >
                 {" "}
-                创建{" "}
+                放弃创建{" "}
+              </Button>
+              <Button type="primary" onClick={this.handleMoreService}>
+                进入多组件构建
               </Button>
             </div>
           </div>
@@ -869,28 +868,23 @@ export default class CreateCheck extends PureComponent {
         type="success"
         title={
           appDetail.service_source == "third_party"
-            ? "第三方服务检测通过"
-            : "服务构建源检测出多模块构建"
+            ? "第三方组件检测通过"
+            : "组件构建源检测出多模块构建"
         }
         description={
           appDetail.service_source == "third_party" ? (
             ""
           ) : (
             <div>
-              <div>服务构建源检测通过仅代表平台可以检测到多模块构建。</div>
-              90%以上的用户在检测通过后可部署成功，如遇部署失败，
-              {configureGlobal.rainbondTextShow && (
-                <span>
-                  可参考{" "}
-                  <a
-                    href="http://www.rainbond.com/docs/user-manual/app-creation/language-support/"
-                    target="_blank"
-                  >
-                    Rainbond源码支持规范
-                  </a>{" "}
-                  对代码进行调整。
-                </span>
-              )}
+              <div>组件构建源检测通过仅代表平台可以检测到多模块构建。</div>
+              90%以上的用户在检测通过后可部署成功，如遇部署失败，可参考{" "}
+              <a
+                href="http://www.rainbond.com/docs/user-manual/app-creation/language-support/"
+                target="_blank"
+              >
+                Rainbond源码支持规范
+              </a>{" "}
+              对代码进行调整。
             </div>
           )
         }
@@ -926,7 +920,7 @@ export default class CreateCheck extends PureComponent {
     return (
       <Result
         type="ing"
-        title="服务构建源检测中..."
+        title="组件构建源检测中..."
         extra={extra}
         description="此过程可能比较耗时，请耐心等待"
         actions={ServiceGetData ? "" : actions}
@@ -970,7 +964,7 @@ export default class CreateCheck extends PureComponent {
       return (
         <Result
           type="ing"
-          title="服务构建源检测中..."
+          title="组件构建源检测中..."
           extra={extra}
           description="此过程可能比较耗时，请耐心等待"
           actions={ServiceGetData ? "" : actions}
@@ -1045,7 +1039,7 @@ export default class CreateCheck extends PureComponent {
                 onOk={this.handleDelete}
                 title="放弃创建"
                 subDesc="此操作不可恢复"
-                desc="确定要放弃创建此服务吗？"
+                desc="确定要放弃创建此组件吗？"
                 onCancel={() => {
                   this.setState({ showDelete: false });
                 }}
@@ -1110,7 +1104,7 @@ export default class CreateCheck extends PureComponent {
                 onOk={this.handleDelete}
                 title="放弃创建"
                 subDesc="此操作不可恢复"
-                desc="确定要放弃创建此服务吗？"
+                desc="确定要放弃创建此组件吗？"
                 onCancel={() => {
                   this.setState({ showDelete: false });
                 }}

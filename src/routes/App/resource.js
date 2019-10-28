@@ -442,6 +442,7 @@ class JAVA extends PureComponent {
             // BUILD_RUNTIMES_HHVM ? subObject.BUILD_RUNTIMES_HHVM = BUILD_RUNTIMES_HHVM : ""
             BUILD_DOTNET_RUNTIME_VERSION ? subObject.BUILD_DOTNET_RUNTIME_VERSION = BUILD_DOTNET_RUNTIME_VERSION : ""
 
+
             if (languageType && languageType == "dockerfile") {
                 this.props.onSubmit && this.props.onSubmit(setObj ? setObj : runtimeInfo)
             } else {
@@ -921,7 +922,7 @@ class JAVA extends PureComponent {
 
                     languageType == "dockerfile" && <div>
                         <Form.Item {...formItemLayout} label="ARG参数">
-                            {getFieldDecorator("set_dockerfile", { initialValue: "" })(<Dockerinput onChange={(value) => { this.onSetObj(value) }} editInfo={arr} />)}
+                            {getFieldDecorator("set_dockerfile", { initialValue: [] })(<Dockerinput onChange={(value) => { this.onSetObj(value) }} editInfo={arr} />)}
                         </Form.Item>
                     </div>
                 }
@@ -1758,7 +1759,7 @@ export default class Index extends PureComponent {
                         onOk={this.onChangeBuildSource}
                         buildSource={this.state.buildSource}
                         appAlias={this.props.appDetail.service.service_alias}
-                        title="更改应用构建源"
+                        title="更改组件构建源"
                         onCancel={this.hideBuildSource}
                     />
                 )}

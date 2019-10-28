@@ -54,8 +54,7 @@ class UserLayout extends React.PureComponent {
     // return configureGlobal.rainbondTextShow && title;
   }
   render() {
-    const { routerData, match, rainbondInfo } = this.props;
-    const nouse = cookie.get("nouse");
+    const { routerData, match, rainbondInfo, nouse } = this.props;
 
     return (
       <DocumentTitle title={this.getPageTitle()}>
@@ -85,15 +84,15 @@ class UserLayout extends React.PureComponent {
               <div className={styles.desc}>无服务器PaaS、以应用为中心、软件定义一切</div>
             </div> */}
             {/* <Switch> */}
-              {getRoutes(match.path, routerData).map(item => (
-                <Route
-                  key={item.key}
-                  path={item.path}
-                  component={item.component}
-                  exact={item.exact}
-                />
-              ))}
-              <Redirect exact from="/user" to="/user/login" />
+            {getRoutes(match.path, routerData).map(item => (
+              <Route
+                key={item.key}
+                path={item.path}
+                component={item.component}
+                exact={item.exact}
+              />
+            ))}
+            <Redirect exact from="/user" to="/user/login" />
             {/* </Switch> */}
           </div>
           <GlobalFooter links={links} copyright={copyright} />
@@ -104,5 +103,6 @@ class UserLayout extends React.PureComponent {
 }
 
 export default connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo
+  rainbondInfo: global.rainbondInfo,
+  nouse: global.nouse
 }))(UserLayout);

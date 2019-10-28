@@ -11,11 +11,10 @@ import {
   getComposeByComposeId
 } from "../../services/createApp";
 import globalUtil from "../../utils/global";
-import CodeCustomForm from "../../components/CodeCustomForm";
 import LogProcress from "../../components/LogProcress";
 import userUtil from "../../utils/user";
 import regionUtil from "../../utils/region";
-import configureGlobal from "../../utils/configureGlobal";
+import rainbondUtil from "../../utils/rainbond";
 import ConfirmModal from "../../components/ConfirmModal";
 import CodeMirror from "react-codemirror";
 require("codemirror/mode/yaml/yaml");
@@ -88,7 +87,10 @@ class ModifyCompose extends PureComponent {
   }
 }
 
-@connect(({ user, appControl }) => ({ currUser: user.currentUser }))
+@connect(({ user, appControl }) => ({
+  currUser: user.currentUser,
+  rainbondInfo: global.rainbondInfo
+}))
 export default class CreateCheck extends PureComponent {
   constructor(props) {
     super(props);
@@ -268,7 +270,7 @@ export default class CreateCheck extends PureComponent {
     return (
       <Result
         type="error"
-        title="应用检测未通过"
+        title="组件检测未通过"
         description="请核对并修改以下信息后，再重新检测。"
         extra={extra}
         actions={actions}
@@ -376,6 +378,7 @@ export default class CreateCheck extends PureComponent {
     }
   };
   renderSuccess = () => {
+    const { rainbondInfo } = this.props;
     const serviceInfo = this.state.serviceInfo || [];
     const extra = (
       <div>
@@ -386,7 +389,7 @@ export default class CreateCheck extends PureComponent {
                 marginBottom: 16
               }}
             >
-              <p>应用名称：{item.service_cname}</p>
+              <p>组件名称：{item.service_cname}</p>
               {(item.service_info || []).map(item => {
                 return (
                   <div
@@ -406,7 +409,7 @@ export default class CreateCheck extends PureComponent {
     const actions = [
       <Button onClick={this.handleBuild} type="primary">
         {" "}
-        构建应用{" "}
+        构建组件{" "}
       </Button>,
       <Button type="default" onClick={this.handleSetting}>
         高级设置
@@ -419,15 +422,15 @@ export default class CreateCheck extends PureComponent {
     return (
       <Result
         type="success"
-        title="应用检测通过"
+        title="组件检测通过"
         description={
           <div>
-            <div>应用检测通过仅代表平台可以检测到代码语言类型和代码源。</div>
+            <div>组件检测通过仅代表平台可以检测到代码语言类型和代码源。</div>
             90%以上的用户在检测通过后可部署成功，如遇部署失败，可参考{" "}
             <a
-              href={`${
-                configureGlobal.rainbondDocumentAddress
-              }docs/user-manual/app-creation/language-support/`}
+              href={`${rainbondUtil.documentPlatform_url(
+                rainbondInfo
+              )}docs/user-manual/app-creation/language-support/`}
               target="_blank"
             >
               rainbond文档
@@ -461,7 +464,7 @@ export default class CreateCheck extends PureComponent {
     return (
       <Result
         type="ing"
-        title="服务构建源检测中..."
+        title="组件构建源检测中..."
         extra={extra}
         description="此过程可能比较耗时，请耐心等待"
         actions={actions}
@@ -581,7 +584,7 @@ export default class CreateCheck extends PureComponent {
             onOk={this.handleDelete}
             title="放弃创建"
             subDesc="此操作不可恢复"
-            desc="确定要放弃创建此应用吗？"
+            desc="确定要放弃创建此组件吗？"
             onCancel={() => {
               this.setState({ showDelete: false });
             }}

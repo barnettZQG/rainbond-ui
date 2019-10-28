@@ -79,7 +79,7 @@ export default class AddServiceComponent extends PureComponent {
     });
   };
 
-  //服务组件展示
+  //组件展示
   handleServiceComponent = (
     ServiceComponentOnePage,
     ServiceComponentTwoPage,
@@ -380,10 +380,10 @@ export default class AddServiceComponent extends PureComponent {
           style={{ marginLeft: "12px" }}
         >
           <Icon type="plus" />
-          添加服务组件
+          添加组件
         </Button>
         <Drawer
-          title="添加服务组件"
+          title="添加组件"
           placement="right"
           onClose={this.cancelAddService}
           visible={this.state.toAddService}
@@ -462,10 +462,11 @@ export default class AddServiceComponent extends PureComponent {
                     </Col>
                   </Tooltip>
                 </Row>
+
                 <Row style={{ marginBottom: "2px" }}>
-                  <Alert
-                    message={
-                      configureGlobal.documentShow && (
+                  {rainbondUtil.documentEnable(rainbondInfo) && (
+                    <Alert
+                      message={
                         <p className={styles.prompt}>
                           注:支持
                           {Object.keys(languageObj).map(key => {
@@ -477,12 +478,12 @@ export default class AddServiceComponent extends PureComponent {
                           })}
                           等语言规范
                         </p>
-                      )
-                    }
-                    type="info"
-                    style={{ height: "50px" }}
-                    showIcon
-                  />
+                      }
+                      type="info"
+                      style={{ height: "50px" }}
+                      showIcon
+                    />
+                  )}
                 </Row>
               </div>
 

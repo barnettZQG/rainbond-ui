@@ -29,6 +29,19 @@ export default class Index extends PureComponent {
   componentDidMount() {
     this.loadUnMntList();
   }
+
+  handleSearchTeamList = query => {
+    this.setState(
+      {
+        current: 1,
+        query
+      },
+      () => {
+        this.loadUnMntList();
+      }
+    );
+  };
+
   handleSubmit = () => {
     if (!this.state.selectedRowKeys.length) {
       notification.warning({ message: "请选择要挂载的目录" });
@@ -133,10 +146,11 @@ export default class Index extends PureComponent {
         onCancel={this.handleCancel}
       >
         <Search
-          style={{ width: "260px" }}
-          placeholder="请输入服务名称进行搜索"
+          style={{ width: "350px", marginBottom: "20px" }}
+          placeholder="请输入组件名称进行搜索"
           onSearch={this.handleSearchTeamList}
         />
+
         <Table
           pagination={pagination}
           dataSource={this.state.list}
@@ -214,7 +228,7 @@ export default class Index extends PureComponent {
               }
             },
             {
-              title: "目标所属服务",
+              title: "目标所属组件",
               dataIndex: "dep_app_name",
               key: "5",
               width: "15%",
@@ -240,7 +254,7 @@ export default class Index extends PureComponent {
               }
             },
             {
-              title: "目标服务所属应用",
+              title: "目标组件所属应用",
               dataIndex: "dep_app_group",
               key: "6",
               width: "15%",

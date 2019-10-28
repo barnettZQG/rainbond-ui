@@ -21,10 +21,10 @@ class OpenRegion extends PureComponent {
     this.getUnRelationedApp();
     this.props.dispatch({
       type: "global/getEnterpriseInfo",
-      payload:{
-        team_name:globalUtil.getCurrTeamName()
+      payload: {
+        team_name: globalUtil.getCurrTeamName()
       },
-      callback: () => {},
+      callback: () => {}
     });
   }
   handleSubmit = () => {
@@ -51,6 +51,7 @@ class OpenRegion extends PureComponent {
   };
   render() {
     const mode = this.props.mode || "modal";
+    const { enterprise } = this.props;
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
         this.setState({
@@ -71,7 +72,8 @@ class OpenRegion extends PureComponent {
           onCancel={this.handleCancel}
         >
           {this.state.regions.length == 0 &&
-            (this.props.enterprise && !this.props.enterprise.is_enterprise) && (
+            enterprise &&
+            !enterprise.is_enterprise && (
               <div style={{ width: "100%", textAlign: "center" }}>
                 <a href="https://www.goodrain.com/info.html" target="_blank">
                   多云管理功能请咨询企业服务

@@ -404,7 +404,7 @@ export default class HttpTable extends PureComponent {
                     this.setState({ appStatusVisable: true, record })
                     winHandler.close()
                 } else if (data && data.bean.status == "undeploy") {
-                    notification.warning({ message: "当前服务属于未部署状态", duration: 5 });
+                    notification.warning({ message: "当前组件属于未部署状态", duration: 5 });
                     that.props.dispatch(routerRedux.push(`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/app/${record.service_alias}`))
                 }
                 else {
@@ -425,7 +425,7 @@ export default class HttpTable extends PureComponent {
             },
             callback: (data) => {
                 if (data) {
-                    notification.success({ message: "启动应用成功", duration: 5 })
+                    notification.success({ message: "启动成功", duration: 5 })
                     this.setState({ loading: false, appStatusVisable: false }, () => {
                         this.load();
                     })
@@ -497,7 +497,7 @@ export default class HttpTable extends PureComponent {
 
             }
         }, {
-            title: '服务组件(端口)',
+            title: '组件(端口)',
             dataIndex: 'service_cname',
             key: 'service_cname',
             align: "center",
@@ -566,7 +566,7 @@ export default class HttpTable extends PureComponent {
                     footer={[<Button type="primary" size="small" onClick={this.resolveOk}>确定</Button>]}
                     zIndex={9999}
                 >
-                    <p>您选择的应用未开启外部访问，是否自动打开并添加此访问策略？</p>
+                    <p>您选择的组件未开启外部访问，是否自动打开并添加此访问策略？</p>
                 </Modal>}
                 {appStatusVisable && <Modal
                     title="友情提示"
@@ -574,7 +574,7 @@ export default class HttpTable extends PureComponent {
                     onOk={this.handleAppStatus}
                     onCancel={this.handleAppStatus_closed}
                 >
-                    <p>当前应用处于关闭状态，启动后方可访问，是否启动应用？</p>
+                    <p>当前组件处于关闭状态，启动后方可访问，是否启动组件？</p>
                 </Modal>}
             </div>
         )

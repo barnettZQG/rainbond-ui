@@ -350,7 +350,19 @@ export default class TcpTable extends PureComponent {
     const currentRegion = region.filter(item => {
       return item.team_region_name == globalUtil.getCurrRegionName();
     });
-
+    const {
+      total,
+      page_num,
+      page_size,
+      dataList,
+      innerEnvs,
+      information_connect_visible,
+      TcpDrawerVisible,
+      whether_open_form,
+      visibleModal,
+      tcpType,
+      agreement
+    } = this.state;
     const columns = [
       {
         title: "Endpoint",
@@ -421,7 +433,7 @@ export default class TcpTable extends PureComponent {
         }
       },
       {
-        title: "服务组件(端口)",
+        title: "组件(端口)",
         dataIndex: "container_port",
         key: "container_port",
         align: "center",
@@ -494,19 +506,7 @@ export default class TcpTable extends PureComponent {
         }
       }
     ];
-    const {
-      total,
-      page_num,
-      page_size,
-      dataList,
-      innerEnvs,
-      information_connect_visible,
-      TcpDrawerVisible,
-      whether_open_form,
-      visibleModal,
-      tcpType,
-      agreement
-    } = this.state;
+
     return (
       <div className={styles.tdPadding}>
         <Row
@@ -573,9 +573,10 @@ export default class TcpTable extends PureComponent {
             ]}
             zIndex={9999}
           >
-            <p>您选择的应用未开启外部访问，是否自动打开并添加此访问策略？</p>
+            <p>您选择的组件未开启外部访问，是否自动打开并添加此访问策略？</p>
           </Modal>
         )}
+
         {visibleModal && (
           <Modal
             title="访问信息"
@@ -593,12 +594,30 @@ export default class TcpTable extends PureComponent {
                   您当前的访问协议是{agreement.protocol},打开MySQL客户端访问
                 </li>
               )}
+
               <li>
+                推荐访问地址&nbsp;
                 <a href="javascript:void(0)" style={{ marginRight: "10px" }}>
-                  {agreement.end_point}
+                  {agreement.end_point.indexOf("0.0.0.0") > -1 &&
+                  currentRegion &&
+                  currentRegion.length > 0
+                    ? agreement.end_point.replace(
+                        /0.0.0.0/g,
+                        currentRegion[0].tcpdomain
+                      )
+                    : agreement.end_point.replace(/\s+/g, "")}
                 </a>
                 <CopyToClipboard
-                  text={agreement.end_point.replace(/\s+/g, "")}
+                  text={
+                    agreement.end_point.indexOf("0.0.0.0") > -1 &&
+                    currentRegion &&
+                    currentRegion.length > 0
+                      ? agreement.end_point.replace(
+                          /0.0.0.0/g,
+                          currentRegion[0].tcpdomain
+                        )
+                      : agreement.end_point.replace(/\s+/g, "")
+                  }
                   onCopy={() => {
                     notification.success({ message: "复制成功" });
                   }}

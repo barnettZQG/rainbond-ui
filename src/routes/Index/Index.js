@@ -29,6 +29,7 @@ import configureGlobal from "../../utils/configureGlobal";
 import userUtil from "../../utils/user";
 import sourceUtil from "../../utils/source-unit";
 import guideutil from "../../utils/guide";
+import rainbondUtil from "../../utils/rainbond";
 
 const { Search } = Input;
 
@@ -143,7 +144,8 @@ export default class Index extends PureComponent {
 
   componentWillMount() {
     this.getTeam();
-    configureGlobal.newbieGuideShow && this.getGuideState();
+    const { rainbondInfo } = this.props;
+    rainbondUtil.newbieGuideEnable(rainbondInfo) && this.getGuideState();
   }
   handleSearchTeamList = query => {
     this.setState(
@@ -348,7 +350,7 @@ export default class Index extends PureComponent {
       callback: res => {
         if (res) {
           dispatch({
-            type: "global/saveIsisNouse",
+            type: "global/setNouse",
             payload: {
               isNouse: false
             }
@@ -358,7 +360,7 @@ export default class Index extends PureComponent {
       handleError: res => {
         if (res && res.data && res.data.code && res.data.code === 10400) {
           dispatch({
-            type: "global/saveIsisNouse",
+            type: "global/setNouse",
             payload: {
               isNouse: true
             }
@@ -485,7 +487,6 @@ export default class Index extends PureComponent {
                     {item.service_name}
                   </Link>
                 )}
-                <span>应用</span>
                 <span
                   style={{
                     color: globalUtil.fetchAbnormalcolor(OptType)
@@ -601,7 +602,7 @@ export default class Index extends PureComponent {
 
     const columnTwo = [
       {
-        title: "服务名称",
+        title: "组件名称",
         dataIndex: "metric",
         key: "metric",
         width: "65%",
@@ -678,7 +679,7 @@ export default class Index extends PureComponent {
         <div className={styles.statItem}>
           <p>
             <Badge status="processing" />
-            服务数量
+            组件数量
           </p>
           <div style={{ color: "rgba(0,0,0,.85)" }}>
             {index.overviewInfo.team_service_num || 0}
@@ -806,11 +807,9 @@ export default class Index extends PureComponent {
           className={styles.modals}
           maskClosable={false}
         >
-          {configureGlobal.rainbondTextShow && (
-            <p style={{ fontSize: "17px" }}>
-              Rainbond是开源的面向企业的基础性管理平台，服务于企业的应用开发、应用发布与交付和应用运维的全阶段流程。为了便于你使用和理解Rainbond项目，我们特意为你准备了Rainbond基础功能流程的新手任务。
-            </p>
-          )}
+          <p style={{ fontSize: "17px" }}>
+            Rainbond是开源的面向企业的基础性管理平台，组件于企业的应用开发、应用发布与交付和应用运维的全阶段流程。为了便于你使用和理解Rainbond项目，我们特意为你准备了Rainbond基础功能流程的新手任务。
+          </p>
           {/* <p><img src="/static/www/img/appOutline/appOutline0.png"></img></p> */}
           <p>
             <div className={styles.stepsbox}>
@@ -981,7 +980,7 @@ export default class Index extends PureComponent {
 
                           <div className={styles.teamListStyle}>
                             <div>
-                              <span>服务：</span>
+                              <span>组件：</span>
                               <Link
                                 to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/groups/${
                                   item.group_id
@@ -1050,7 +1049,7 @@ export default class Index extends PureComponent {
                 }}
                 bordered={false}
                 className={styles.activeCard}
-                title="团队动态"
+                title="动态"
                 loading={activitiesLoading}
               >
                 <List loading={activitiesLoading} size="large">
@@ -1118,7 +1117,7 @@ export default class Index extends PureComponent {
                   marginBottom: 10,
                   height: 468
                 }}
-                title="热门访问服务"
+                title="热门访问组件"
                 bordered={false}
                 bodyStyle={{
                   padding: 0
