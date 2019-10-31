@@ -336,6 +336,7 @@ class BasicLayout extends React.PureComponent {
       nouse,
       rainbondInfo
     } = this.props;
+
     const bashRedirect = this.getBashRedirect();
     const layout = () => {
       const team = userUtil.getTeamByTeamName(
@@ -437,6 +438,7 @@ class BasicLayout extends React.PureComponent {
               }
               Authorized={Authorized}
               menuData={getMenuData(groups)}
+              completeMenuData={getMenuData(groups,true)}
               collapsed={collapsed}
               location={location}
               isMobile={this.state.isMobile}
