@@ -127,7 +127,7 @@ export const getMenuData = (groups, is_complete) => {
             }`,
             link: true,
             exact: true,
-            hideInMenu: true // 隐藏该组
+            // hideInMenu: true // 隐藏该组
           }));
           return {
             name: group.group_name,
